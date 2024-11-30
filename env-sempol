@@ -1,1 +1,6 @@
+PORT=3000
 MONGODB_URL=mongodb+srv://<db_username>:<db_password>@cluster0.ipmfa.mongodb.net
+ACCESS_ROKEN_SECRET=*****
+ACCESS_ROKEN_EXPIRT=1d
+REFRESH_TOKEN_SECRET=****
+REFRESH_TOKEN_EXPIRT=10d
