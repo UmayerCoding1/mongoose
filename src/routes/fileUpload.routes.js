@@ -1,9 +1,11 @@
 import express from 'express';
-import { registerUser } from '../controllers/user.controllers.js';
+import { fileUpload } from '../controllers/fileUpload.controllers.js';
 import { upload } from '../middlewares/multer.middleware.js';
+
+
 const router = express.Router();
 
-router.post('/register', upload.fields([
+router.post('/upload', upload.fields([
     {
         name: "avatar",
         // maxCount:1
@@ -12,6 +14,6 @@ router.post('/register', upload.fields([
         name: "coverImage",
         // maxCount:1
     }
-]),registerUser)
+]),fileUpload);
 
 export default router;
