@@ -10,9 +10,10 @@ const generateAccessRefreshToken = async (userId) => {
   try {
     const user = await User.findById(userId);
 
-    const accessToken = user.generateAccessToken();
-    const refreshToken = user.generateRefreshToken();
-
+    const accessToken =await user.generateAccessToken();
+    const refreshToken =await user.generateRefreshToken();
+ 
+ 
     user.refreshToken = refreshToken;
     await user.save({ validateBeforeSave: false });
 
@@ -139,6 +140,9 @@ const loginUser = asyncHandler(async (req, res) => {
   const { accessToken, refreshToken } = await generateAccessRefreshToken(
     user._id
   );
+  
+  
+  
   if (!accessToken && !refreshToken) {
     throw new ApiError(
       500,
@@ -174,8 +178,8 @@ const loginUser = asyncHandler(async (req, res) => {
 
 const logoutUser = asyncHandler(async (req, res) => {
   await User.findByIdAndUpdate(req.user._id, {
-    $set: {
-      refreshToken: undefined,
+    $unset: {
+      refreshToken: 1,
     },
   });
 
@@ -199,6 +203,8 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Unauthorized request");
   }
 
+  
+  
   const decodeToken = jwt.verify(
     incomingRefreshToken,
     process.env.REFRESH_TOKEN_SECRET
